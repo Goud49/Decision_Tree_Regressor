@@ -1,37 +1,14 @@
 import streamlit as st
 import pickle
 import numpy as np
-import os
 
 
-# -------------------------
-# Page Config
-# -------------------------
 st.set_page_config(
     page_title="House Price Prediction",
-    page_icon="🏠",
-    layout="wide"
+    page_icon="🏠"
 )
 
 
-# -------------------------
-# Check Files
-# -------------------------
-if not os.path.exists("model.pkl"):
-
-    st.error("model.pkl not found")
-    st.stop()
-
-
-if not os.path.exists("scaler.pkl"):
-
-    st.error("scaler.pkl not found")
-    st.stop()
-
-
-# -------------------------
-# Load Model
-# -------------------------
 with open(
     "model.pkl",
     "rb"
@@ -40,9 +17,6 @@ with open(
     model = pickle.load(file)
 
 
-# -------------------------
-# Load Scaler
-# -------------------------
 with open(
     "scaler.pkl",
     "rb"
@@ -51,21 +25,11 @@ with open(
     scaler = pickle.load(file)
 
 
-# -------------------------
-# Title
-# -------------------------
 st.title(
     "🏠 House Price Prediction"
 )
 
-st.write(
-    "Decision Tree Regressor Model"
-)
 
-
-# -------------------------
-# Inputs
-# -------------------------
 feature1 = st.number_input(
     "Feature 1",
     value=10.0
@@ -87,9 +51,6 @@ feature4 = st.number_input(
 )
 
 
-# -------------------------
-# Prediction
-# -------------------------
 if st.button(
     "Predict Price"
 ):
