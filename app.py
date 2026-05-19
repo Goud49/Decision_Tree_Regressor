@@ -19,19 +19,13 @@ st.set_page_config(
 # -------------------------
 if not os.path.exists("model.pkl"):
 
-    st.error(
-        "model.pkl file not found"
-    )
-
+    st.error("model.pkl not found")
     st.stop()
 
 
 if not os.path.exists("scaler.pkl"):
 
-    st.error(
-        "scaler.pkl file not found"
-    )
-
+    st.error("scaler.pkl not found")
     st.stop()
 
 
@@ -43,9 +37,7 @@ with open(
     "rb"
 ) as file:
 
-    model = pickle.load(
-        file
-    )
+    model = pickle.load(file)
 
 
 # -------------------------
@@ -56,9 +48,7 @@ with open(
     "rb"
 ) as file:
 
-    scaler = pickle.load(
-        file
-    )
+    scaler = pickle.load(file)
 
 
 # -------------------------
@@ -69,40 +59,32 @@ st.title(
 )
 
 st.write(
-    "Predict house prices using Decision Tree Regressor."
+    "Decision Tree Regressor Model"
 )
 
 
 # -------------------------
 # Inputs
 # -------------------------
-col1, col2 = st.columns(2)
+feature1 = st.number_input(
+    "Feature 1",
+    value=10.0
+)
 
+feature2 = st.number_input(
+    "Feature 2",
+    value=20.0
+)
 
-with col1:
+feature3 = st.number_input(
+    "Feature 3",
+    value=30.0
+)
 
-    feature1 = st.number_input(
-        "Feature 1",
-        value=10.0
-    )
-
-    feature2 = st.number_input(
-        "Feature 2",
-        value=20.0
-    )
-
-
-with col2:
-
-    feature3 = st.number_input(
-        "Feature 3",
-        value=30.0
-    )
-
-    feature4 = st.number_input(
-        "Feature 4",
-        value=40.0
-    )
+feature4 = st.number_input(
+    "Feature 4",
+    value=40.0
+)
 
 
 # -------------------------
@@ -131,9 +113,6 @@ if st.button(
     prediction = model.predict(
         input_data
     )
-
-
-    st.markdown("---")
 
 
     st.success(
