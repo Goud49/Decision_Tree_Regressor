@@ -4,6 +4,9 @@ import numpy as np
 import os
 
 
+# -------------------------
+# Page Config
+# -------------------------
 st.set_page_config(
     page_title="House Price Prediction",
     page_icon="🏠",
@@ -11,16 +14,30 @@ st.set_page_config(
 )
 
 
+# -------------------------
+# Check Files
+# -------------------------
 if not os.path.exists("model.pkl"):
-    st.error("model.pkl file not found")
+
+    st.error(
+        "model.pkl file not found"
+    )
+
     st.stop()
 
 
 if not os.path.exists("scaler.pkl"):
-    st.error("scaler.pkl file not found")
+
+    st.error(
+        "scaler.pkl file not found"
+    )
+
     st.stop()
 
 
+# -------------------------
+# Load Model
+# -------------------------
 with open(
     "model.pkl",
     "rb"
@@ -31,6 +48,9 @@ with open(
     )
 
 
+# -------------------------
+# Load Scaler
+# -------------------------
 with open(
     "scaler.pkl",
     "rb"
@@ -41,44 +61,53 @@ with open(
     )
 
 
+# -------------------------
+# Title
+# -------------------------
 st.title(
     "🏠 House Price Prediction"
 )
 
 st.write(
-    "Predict house price using Decision Tree Regressor."
+    "Predict house prices using Decision Tree Regressor."
 )
 
 
+# -------------------------
+# Inputs
+# -------------------------
 col1, col2 = st.columns(2)
 
 
 with col1:
 
-    overall_qual = st.number_input(
-        "Overall Quality",
-        value=5
+    feature1 = st.number_input(
+        "Feature 1",
+        value=10.0
     )
 
-    gr_liv_area = st.number_input(
-        "Ground Living Area",
-        value=1500
+    feature2 = st.number_input(
+        "Feature 2",
+        value=20.0
     )
 
 
 with col2:
 
-    garage_cars = st.number_input(
-        "Garage Cars",
-        value=2
+    feature3 = st.number_input(
+        "Feature 3",
+        value=30.0
     )
 
-    total_bsmt_sf = st.number_input(
-        "Basement Area",
-        value=1000
+    feature4 = st.number_input(
+        "Feature 4",
+        value=40.0
     )
 
 
+# -------------------------
+# Prediction
+# -------------------------
 if st.button(
     "Predict Price"
 ):
@@ -88,10 +117,10 @@ if st.button(
     )
 
 
-    input_data[0][17] = overall_qual
-    input_data[0][46] = total_bsmt_sf
-    input_data[0][61] = gr_liv_area
-    input_data[0][81] = garage_cars
+    input_data[0][0] = feature1
+    input_data[0][1] = feature2
+    input_data[0][2] = feature3
+    input_data[0][3] = feature4
 
 
     input_data = scaler.transform(
@@ -104,6 +133,9 @@ if st.button(
     )
 
 
+    st.markdown("---")
+
+
     st.success(
-        f"Predicted House Price: ₹ {prediction[0]:,.2f}"
+        f"Predicted Price: ₹ {prediction[0]:,.2f}"
     )
